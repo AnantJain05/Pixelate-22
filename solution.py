@@ -16,14 +16,6 @@ Edge = namedtuple('Edge', 'start, end, cost')
 
 def goto(current_point, point):
     i = 0
-    # p.stepSimulation()
-    # image = env.camera_feed()
-    # image = np.ascontiguousarray(image, dtype=np.uint8)
-    # cv2.imshow("img", image)
-    # cv2.imwrite("sample_arena_img.png", image)
-    # cv2.waitKey(1)
-    # corners = get_corners(image)
-    # husky_dir = (corners[0][1]-corners[3][1])/(corners[0][0]-corners[3][0])
     target_dir = math.atan2((point[1] - current_point[1]), (point[0] - current_point[0]))
     # print(husky_dir, target_dir)
     current_point = (
@@ -53,11 +45,8 @@ def goto(current_point, point):
             break
         else:
             if target_dir * husky_dir > 0:
-                # if target_dir - husky_dir > 0:
                 velocity = (target_dir - husky_dir) * 15
                 env.move_husky(velocity, -velocity, velocity, -velocity)
-                # else:
-                #     env.move_husky(-velocity, velocity, -velocity, velocity)
             else:
                 if husky_dir < 0:
                     if 0 <= target_dir - husky_dir <= math.pi:
@@ -141,9 +130,6 @@ def get_corners(img):
             return None
     else:
         return None
-    # cv2.imwrite("media/aruco_detected.png", img)
-    # cv2.imshow("img", img)
-    # cv2.waitKey(0)
 
 
 def make_edge(start, end, cost=1):
@@ -282,13 +268,6 @@ if __name__ == "__main__":
             cv2.circle(img, (cx, cy), 3, (0, 255, 0), -1)
             color_list.append((cx, cy))
         colors_list.append(color_list)
-    # print(colors_list[0])
-    # print(colors_list[1])
-    # print(colors_list[2])
-    # print(colors_list[3])
-    # print(colors_list[4])
-    # print(colors_list[5])
-    # print(colors_list[6])
 
     all_tiles = colors_list[0] + colors_list[1] + colors_list[2] + colors_list[3] + colors_list[4] + colors_list[5] + colors_list[6]
     all_tiles = list(set(all_tiles))
@@ -399,18 +378,6 @@ if __name__ == "__main__":
             path2, distance2 = graph.dijkstra(path1[len(path1) - 1], loc)
             path2 = list(path2)
 
-    # print(path1, distance1)
-    # print(path2)
-
-    # while True:
-    # p.stepSimulation()
-    # img = env.camera_feed()
-    # img = np.ascontiguousarray(img, dtype=np.uint8)
-    # cv2.imshow("img", img)
-    # cv2.imwrite("sample_arena_img.png", img)
-    # cv2.waitKey(1)
-    # corners = aruco(img)
-
     curr_point = path1[0]
     for i in range(1, len(path1)):
         goto(curr_point, path1[i])
@@ -469,10 +436,6 @@ if __name__ == "__main__":
             if math.fabs(point[0] - cx) < 5 and math.fabs(point[1] - cy) < 5:
                 if len(contour) == 4:
                     antidotes["S"] = point
-                # elif area < 300:
-                #     antidotes["T"] = point
-                # else:
-                #     antidotes["C"] = point
                 else:
                     tcarea.append(area)
                     tcpoints.append(point)
@@ -484,7 +447,6 @@ if __name__ == "__main__":
         antidotes["C"] = tcpoints[0]
         antidotes["T"] = tcpoints[1]
 
-    # print(tiles_grid[0][18])
     for i in range(13):
         for j in range(25):
             for shape in villains:
